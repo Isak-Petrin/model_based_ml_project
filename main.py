@@ -22,7 +22,11 @@ import pyro.distributions as dist
 from pyro import poutine
 from pyro.infer import SVI, TraceEnum_ELBO, config_enumerate, infer_discrete
 from pyro.optim import Adam
+import matplotlib
+matplotlib.use('Agg')  # must be before pyplot import
 import matplotlib.pyplot as plt
+
+
 import matplotlib.cm as cm
 
 
@@ -395,10 +399,10 @@ def plot_training_loss(losses, title='ELBO loss during training'):
 
 def main():
     # --- Configuration ---
-    DATA_PATH = 'data/ujipenchars2.txt'   # <-- adjust path as needed
-    DIGIT = 'a'                       # which digit to model
-    K = 20                            # number of regimes
-    NUM_STEPS = 500                   # SVI training steps
+    DATA_PATH = 'ujipenchars2.txt'   # <-- adjust path as needed
+    DIGIT = 'o'                       # which digit to model
+    K = 7                            # number of regimes
+    NUM_STEPS = 2000                   # SVI training steps
     LR = 0.005                        # learning rate
 
     print(f'=== AR-HMM for digit "{DIGIT}" with K={K} regimes ===\n')
@@ -418,7 +422,7 @@ def main():
     ]
 
     # Use a subset for faster training
-    sequences_train = sequences[:20]
+    sequences_train = sequences[:100]
     print(f'  Using {len(sequences_train)} sequences for training')
     print(f'  Sequence lengths: {[s.shape[0] for s in sequences_train[:5]]}...\n')
 
